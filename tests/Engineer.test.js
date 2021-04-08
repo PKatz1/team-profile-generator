@@ -10,7 +10,7 @@ describe('Engineer', () => {
     
     describe('Initialization', () => {
 
-        it('returns an object that is an instance of the Employee class when called with the new keyword', () => {
+        it('returns an object that is an instance of the Engineer class when called with the new keyword', () => {
             
             const engineer = new Engineer();
         
@@ -72,7 +72,7 @@ describe('Engineer', () => {
 
     describe('getRole', () => {
        
-        it("returns 'Employee' when the getRole method is called", () => {
+        it("returns 'Engineer' when the getRole method is called", () => {
             const engineer = new Engineer();
 
             expect(engineer.getRole()).toBe('Engineer');

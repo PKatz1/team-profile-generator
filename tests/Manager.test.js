@@ -9,7 +9,7 @@ describe('Manager', () => {
 
     describe('Initialization', () => {
 
-        it('returns an object that is an instance of the Employee class when called with the new keyword', () => {
+        it('returns an object that is an instance of the Manager class when called with the new keyword', () => {
            
             const manager = new Manager();
             
@@ -44,7 +44,7 @@ describe('Manager', () => {
             const name = "Obi";
             const manager = new Manager(name);
 
-            expect(engineer.getName()).toBe(name);
+            expect(manager.getName()).toBe(name);
         });
     })
 
@@ -73,7 +73,7 @@ describe('Manager', () => {
     
     describe('getRole', () => {
     
-        it("returns 'Employee' when the getRole method is called", () => {
+        it("returns 'Manager' when the getRole method is called", () => {
             const manager = new Manager();
 
             expect(manager.getRole()).toBe('Manager');
