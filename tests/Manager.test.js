@@ -9,7 +9,8 @@ describe('Manager', () => {
 
     describe('Initialization', () => {
 
-        it('returns an object that is an instance of the Manager class when called with the new keyword', () => {
+        it('returns an object that is an instance of the Manager
+         class when called with the new keyword', () => {
            
             const manager = new Manager();
             
