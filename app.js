@@ -20,7 +20,7 @@ let completeTeamArray = [];
 function startingPrompt() {
     inquirer.prompt([
         {
-            message: "/////////This is Phil's Team Generator App! Please type in your team's name to start://///////",
+            message: "*********This is Phil's Team Generator App! Please type in your team's name to start:*********",
             name: "teamname"
         }
     ])
@@ -47,7 +47,7 @@ function addManager() {
 
         {
             type: "number",
-            message: "What is your team manager's office number?",
+            message: "Enter team manager's office number",
             name: "officeNumber"
         },
     ])
@@ -57,7 +57,7 @@ function addManager() {
             const id = 1
             const email = data.email
             const officeNumber = data.officeNumber
-            const teamMember = new Manager(name, title, id, email, officeNumber)
+            const teamMember = new Manager(name, id, email, officeNumber)
             completeTeamArray.push(teamMember)
             addTeamMembers();
         });
@@ -69,7 +69,7 @@ function addTeamMembers() {
     inquirer.prompt([
         {
             type: "list",
-            message: "Would you like to add more team members?",
+            message: "Would you like to add another team member?",
             choices: ["Yes, add an engineer", "Yes, add an intern", "No, my team is complete"],
             name: "addMemberData"
         }
@@ -78,14 +78,14 @@ function addTeamMembers() {
         .then(function (data) {
 
             switch (data.addMemberData) {
-                case "Yes, add an engineer":
+                case "Yes, I wan to add an engineer":
                     addEngineer();
                     break;
 
-                case "Yes, add an intern":
+                case "Yes, I want to add an intern":
                     addIntern();
                     break;
-                case "No, my team is complete":
+                case "No, I am done adding team members":
                     compileTeam();
                     break;
             }
@@ -104,7 +104,7 @@ function addEngineer() {
             name: "email"
         },
         {
-            message: "What is this engineer's Github profile?",
+            message: "Enter the engineeer's github profile",
             name: "github"
         }
     ])
@@ -134,7 +134,7 @@ function addIntern() {
             name: "email"
         },
         {
-            message: "What is this intern's school?",
+            message: "Enter the intern's school",
             name: "school"
         }
     ])
@@ -153,7 +153,7 @@ function addIntern() {
 
 // function to put the team together
 function compileTeam() {
-    console.log("//////////Team Complete. Thank you.////////")
+    console.log("**********Team Complete. Thank you.**********")
 
     //creation of HTML file
     const htmlArray = []
