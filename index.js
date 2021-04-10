@@ -13,10 +13,54 @@ const generatePageTemplate = require('./page-template');
 const OUTPUT_DIR = path.resolve(_dirname, "output")
 const outputPath - path.join(OUTPUT_Dir, "team.html);
 
-//create an arraay to hold all of our team members
+//create an array to hold all of our team members
+const teamMembers = [
+    {
+        type:'input',
+        name:'role',
+        message:'What is your Role?',
+    },
+    {
+        type:'input',
+        name:'id',
+        message:'What is your ID#?',
+    },
+    {
+        type:'input',
+        name:'email',
+        message:'what is your email address?',
+    },
+    {
+        type:'input',
+        name:'tel',
+        message:'what is your phone number?',
+    },
+    {
+        type:'input',
+        name:'github',
+        message:'What is your github address?',
+    },
+    {
+        type:'input',
+        name:'school',
+        message:'What school do you atttend?',
+    },
+  
+];
+
+
+}
+
 
 // init function
-
+function init(){
+    inquirer.prompt(questions)
+    .then((answers) =>{
+        console.log(answers);
+        writeToFile('myteam.html',generateHtml({...answers}));
+    })
+}
+init();
 // function to create a Manager
     //prompt user with questions needed to satisfy the input for a manager object
     inquirer.prompt().then()
@@ -38,7 +82,11 @@ const outputPath - path.join(OUTPUT_Dir, "team.html);
     //function to add an intern
     //same idea as create manager
 
-    //fucntion to create the output
+    //function to create the output
+
+    function writeToFile(fileName, data){
+        return fs.writeFileSync(path.join(process.cwd(), fileName), data);
+        
     //call the function from page-template module and pass it in the team members' array and safe to a data variable
     //use fs module to write the file -> pass in the outputPath, the data, and the "utf-8"
 
