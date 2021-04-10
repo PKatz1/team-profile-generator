@@ -5,15 +5,15 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const style = require("./templates/css")
 
-const Employee = require("./lib/employee")
-const Engineer = require("./lib/engineer")
-const Manager = require("./lib/manager")
-const Intern = require("./lib/intern")
+const Employee = require("./lib/Employee")
+const Engineer = require("./lib/Engineer")
+const Manager = require("./lib/Manager")
+const Intern = require("./lib/Intern")
 
 
 
 //create an array to hold all of our team members
-let finalTeamArray = [];
+let completeTeamArray = [];
 
 
 // init function
@@ -26,7 +26,7 @@ function startingPrompt() {
     ])
         .then(function(data){
             const teamName = data.teamname
-            finalTeamArray.push(teamName)
+            completeTeamArray.push(teamName)
             addManager();
         })
 
@@ -57,8 +57,8 @@ function addManager() {
             const id = 1
             const email = data.email
             const officeNumber = data.officeNumber
-            const teamMember = new Manager(name, id, email, officeNumber)
-            finalTeamArray.push(teamMember)
+            const teamMember = new Manager(name, title, id, email, officeNumber)
+            completeTeamArray.push(teamMember)
             addTeamMembers();
         });
 
@@ -111,11 +111,11 @@ function addEngineer() {
 
     .then(function (data) {
         const name = data.name
-        const id = finalTeamArray.length + 1
+        const id = completeTeamArray.length + 1
         const email = data.email
         const github = data.github
         const teamMember = new Engineer(name, id, email, github)
-        finalTeamArray.push(teamMember)
+        completeTeamArray.push(teamMember)
         addTeamMembers()
     });
 
@@ -141,11 +141,11 @@ function addIntern() {
 
         .then(function (data) {
             const name = data.name
-            const id = finalTeamArray.length + 1
+            const id = completeTeamArray.length + 1
             const email = data.email
             const school = data.school
             const teamMember = new Intern(name, id, email, school)
-            finalTeamArray.push(teamMember)
+            completeTeamArray.push(teamMember)
             addTeamMembers()
         });
 
@@ -155,6 +155,7 @@ function addIntern() {
 function compileTeam() {
     console.log("//////////Team Complete. Thank you.////////")
 
+    //creation of HTML file
     const htmlArray = []
     const htmlBeginning = `
     <!DOCTYPE html>
@@ -163,7 +164,7 @@ function compileTeam() {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>${finalTeamArray[0]}</title>
+    <title>${completeTeamArray[0]}</title>
     <link href="https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
      ${style}
@@ -171,36 +172,36 @@ function compileTeam() {
 </head>
 <body>
     <div class="banner-bar">
-        <h1>${finalTeamArray[0]}</h1>
+        <h1>${completeTeamArray[0]}</h1>
     </div>
     <div class="card-container">
     `
     htmlArray.push(htmlBeginning);
 
-    for (let i = 1; i < finalTeamArray.length; i++) {
+    for (let i = 1; i < completeTeamArray.length; i++) {
         let object = `
         <div class="member-card">
             <div class="card-top">
-                <h2>${finalTeamArray[i].name}</h2>
-                <h2>${finalTeamArray[i].title}</h2>
+                <h2>${completeTeamArray[i].name}</h2>
+                <h2>${completeTeamArray[i].title}</h2>
             </div>
             <div class="card-bottom">
-                <p>Employee ID: ${finalTeamArray[i].id}</p>
-                <p>Email: <a href="mailto:${finalTeamArray[i].email}">${finalTeamArray[i].email}</a>></p>
+                <p>Employee ID: ${completeTeamArray[i].id}</p>
+                <p>Email: <a href="mailto:${completeTeamArray[i].email}">${completeTeamArray[i].email}</a>></p>
         `
-        if (finalTeamArray[i].officeNumber) {
+        if (completeTeamArray[i].officeNumber) {
             object += `
-            <p>${finalTeamArray[i].officeNumber}</p>
+            <p>${completeTeamArray[i].officeNumber}</p>
             `
         }
-        if (finalTeamArray[i].github) {
+        if (completeTeamArray[i].github) {
             object += `
-            <p>GitHub: <a href="https://github.com/${finalTeamArray[i].github}">${finalTeamArray[i].github}</a></p>
+            <p>GitHub: <a href="https://github.com/${completeTeamArray[i].github}">${completeTeamArray[i].github}</a></p>
             `
         }
-        if (finalTeamArray[i].school) {
+        if (completeTeamArray[i].school) {
             object += `
-            <p>School: ${finalTeamArray[i].school}</p>
+            <p>School: ${completeTeamArray[i].school}</p>
             `
         }
         object += `
@@ -217,8 +218,7 @@ function compileTeam() {
     `
     htmlArray.push(htmlEnd);
 
-    fs.writeFile(`./generated-html/${finalTeamArray[0]}.html`, htmlArray.join(""), function (err) {
-        
+    fs.writeFile(`./${completeTeamArray[0]}.html`, htmlArray.join(""), function (err) {
     })
 }
 
