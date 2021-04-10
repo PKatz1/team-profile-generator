@@ -1,31 +1,37 @@
 // import modules -->employee, manager, intern, engineer, fs, inquirer, path, import page-template
 
-const manager = require('./lib/Manager');
-const employee = require('./lib/Employee');
-const intern = require('./lib/Intern');
-const intern = require('./lib/Engineer');
-const fs = require ('path');
-const inquirer = require('inquirer');
-const generatePageTemplate = require('./page-template');
+  
+const inquirer = require("inquirer");
+const fs = require("fs");
+const style = require("./templates/css")
+
+const Employee = require("./lib/employee")
+const Engineer = require("./lib/engineer")
+const Manager = require("./lib/manager")
+const Intern = require("./lib/intern")
 
 
-//use path module to define the path to the output director
-const OUTPUT_DIR = path.resolve(_dirname, "output")
-const outputPath - path.join(OUTPUT_Dir, "team.html);
 
 //create an array to hold all of our team members
-
+let finalTeamArray = [];
 
 
 // init function
-function init(){
-    inquirer.prompt(questions)
-    .then((answers) =>{
-        console.log(answers);
-        writeToFile('myteam.html',generateHtml({...answers}));
-    })
+function startingPrompt() {
+    inquirer.prompt([
+        {
+            message: "/////////This is Phil's Team Generator App! Please type in your team's name to start://///////",
+            name: "teamname"
+        }
+    ])
+        .then(function(data){
+            const teamName = data.teamname
+            finalTeamArray.push(teamName)
+            addManager();
+        })
+
+    
 }
-init();
 
 // function to create a Manager
 function addManager() {
