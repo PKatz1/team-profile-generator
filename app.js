@@ -1,6 +1,6 @@
 // import modules -->employee, manager, intern, engineer, fs, inquirer, path, import page-template
 
-  
+
 const inquirer = require("inquirer");
 const fs = require("fs");
 const style = require("./templates/css")
@@ -24,13 +24,13 @@ function startingPrompt() {
             name: "teamname"
         }
     ])
-        .then(function(data){
+        .then(function (data) {
             const teamName = data.teamname
             completeTeamArray.push(teamName)
             addManager();
         })
 
-    
+
 }
 
 // function to create a Manager
@@ -58,12 +58,12 @@ function addManager() {
             const email = data.email
             const officeNumber = data.officeNumber
             const teamMember = new Manager(name, id, email, officeNumber)
+            teamMember.role = "Manager"
             completeTeamArray.push(teamMember)
             addTeamMembers();
         });
 
 }
-
 //function to prompt for adding additional team members 
 function addTeamMembers() {
     inquirer.prompt([
@@ -78,21 +78,21 @@ function addTeamMembers() {
         .then(function (data) {
 
             switch (data.addMemberData) {
-                case "Yes, I wan to add an engineer":
+                case "Yes, add an engineer":
                     addEngineer();
                     break;
 
-                case "Yes, I want to add an intern":
+                case "Yes, add an intern":
                     addIntern();
                     break;
-                case "No, I am done adding team members":
+                case "No, my team is complete":
                     compileTeam();
                     break;
             }
         });
 }
 
-//function to addd Engineer
+//function to add Engineer
 function addEngineer() {
     inquirer.prompt([
         {
@@ -109,15 +109,16 @@ function addEngineer() {
         }
     ])
 
-    .then(function (data) {
-        const name = data.name
-        const id = completeTeamArray.length + 1
-        const email = data.email
-        const github = data.github
-        const teamMember = new Engineer(name, id, email, github)
-        completeTeamArray.push(teamMember)
-        addTeamMembers()
-    });
+        .then(function (data) {
+            const name = data.name
+            const id = completeTeamArray.length + 1
+            const email = data.email
+            const github = data.github
+            const teamMember = new Engineer(name, id, email, github)
+            teamMember.role = "Engineer"
+            completeTeamArray.push(teamMember)
+            addTeamMembers()
+        });
 
 };
 
@@ -143,8 +144,9 @@ function addIntern() {
             const name = data.name
             const id = completeTeamArray.length + 1
             const email = data.email
-            const school = data.school
+            const school = data.school  
             const teamMember = new Intern(name, id, email, school)
+            teamMember.role = "Intern"
             completeTeamArray.push(teamMember)
             addTeamMembers()
         });
@@ -183,11 +185,11 @@ function compileTeam() {
         <div class="member-card">
             <div class="card-top">
                 <h2>${completeTeamArray[i].name}</h2>
-                <h2>${completeTeamArray[i].title}</h2>
+                <h2>${completeTeamArray[i].role}</h2>
             </div>
             <div class="card-bottom">
                 <p>Employee ID: ${completeTeamArray[i].id}</p>
-                <p>Email: <a href="mailto:${completeTeamArray[i].email}">${completeTeamArray[i].email}</a>></p>
+                <p>Email: <a href="mailto:${completeTeamArray[i].email}">${completeTeamArray[i].email}</a></p>
         `
         if (completeTeamArray[i].officeNumber) {
             object += `
